@@ -18,7 +18,7 @@ class BFS():
             cur_node = frontier.pop(0)  
 
             if cur_node.state == self.initial_state:
-                database[state_to_string(cur_node.state)] = (cur_node.g_n, [i for i in range(num_towers-1)])  
+                database[state_to_string(cur_node.state)] = (cur_node.g_n, [i for i in range(num_towers)])  
             else:
                 database[state_to_string(cur_node.state)] = (cur_node.g_n, allowed_pegs(cur_node.state,cur_node.parent.state))             
             
@@ -28,7 +28,7 @@ class BFS():
             child_list = self.get_childs(cur_node)
 
             for child in child_list:
-                if (not self.in_list(child, frontier)) and (child.state not in explored):
+                if (not self.in_list(child, frontier)) and (child not in explored):
                     frontier.append(child)
         
         return database
