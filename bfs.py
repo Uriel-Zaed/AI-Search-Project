@@ -15,6 +15,8 @@ class BFS():
         database = {} # key: configuration, value: (g(configuration), array of allowed pegs))
         
         while((len(frontier) > 0)):
+            if len(explored)%1000==0:
+                print(len(explored))
             cur_node = frontier.pop(0)  
 
             if cur_node.state == self.initial_state:
@@ -28,7 +30,7 @@ class BFS():
             child_list = self.get_childs(cur_node)
 
             for child in child_list:
-                if (not self.in_list(child, frontier)) and (child not in explored):
+                if (not self.in_list(child, frontier)) and (child.state not in explored):
                     frontier.append(child)
         
         return database
@@ -47,7 +49,8 @@ class BFS():
             for other_peg,other_disk in enumerate(min_disk_per_peg):
                 if peg != other_peg and disk != -1: # checks if not same peg and have a disk in that peg
                     if disk < other_disk or other_disk == -1: # check if possible move
-                        new_state = deepcopy(cur_node.state) # copy of the cur node state
+                        # new_state = deepcopy(cur_node.state) # copy of the cur node state
+                        new_state = [d for d in cur_node.state] # copy of the cur node state
                         new_state[disk] = other_peg # change peg
                         child_list.append(Node(new_state, cur_node, cur_node.g_n + 1)) # creating child
 
