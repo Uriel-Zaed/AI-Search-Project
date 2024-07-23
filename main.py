@@ -2,13 +2,11 @@
 from const import *
 from bfs import BFS
 from static_functions import *
-from a_star import A_Star
 import json
-from a_star_hur_double4 import A_Star_Double4
-from a_star_strong import A_Star_Strong
-from a_star_better_hur import A_Star_Better_Hur
+from a_star_hur_additive import A_Star_Additive
+from a_star_pdbi import A_Star_PDBI
 
-######################## BFS ###########################
+# ######################## BFS ###########################
 # goal_state = [num_towers-1 for d in range(num_disks_bfs)]
 
 # bfs = BFS(goal_state)
@@ -16,7 +14,7 @@ from a_star_better_hur import A_Star_Better_Hur
 # database = bfs.solve()
 # print("BFS done")
 
-# with open(f'hanoi_database {num_disks_bfs}.txt', 'w') as convert_file: 
+# with open(f'hanoi_pdb_{num_disks_bfs}.txt', 'w') as convert_file: 
 #      convert_file.write(json.dumps(database))
 
 ##################### A* ############################
@@ -26,7 +24,7 @@ from a_star_better_hur import A_Star_Better_Hur
 
 # price_buckets = {} # key = price, value = (conig,allowed pegs)
 
-# for config in database.keys():
+# for config in database:
 #     if database[config][0] not in price_buckets.keys():
 #         price_buckets[database[config][0]] = [(config, database[config][1])]
 #     else:
@@ -96,13 +94,13 @@ from a_star_better_hur import A_Star_Better_Hur
 
 # print("finnish")
 
-###################### compper between hur ###################
-a_star_double4 = A_Star_Double4([str(0)*num_disks], str(num_towers-1)*num_disks)
-print(f"a_star_double4 price: {a_star_double4.solve()}")
-print(f"a_star_double4 nodes: {a_star_double4.N}")
-a_star_strong = A_Star_Strong([str(0)*num_disks], str(num_towers-1)*num_disks)
-print(f"a_star_strong price: {a_star_strong.solve()}")
-print(f"a_star_strong nodes: {a_star_strong.N}")
+# ###################### compper between hur ###################
+# a_star_double4 = A_Star_Double4([str(0)*num_disks], str(num_towers-1)*num_disks)
+# print(f"a_star_double4 price: {a_star_double4.solve()}")
+# print(f"a_star_double4 nodes: {a_star_double4.N}")
+# a_star_strong = A_Star_Strong([str(0)*num_disks], str(num_towers-1)*num_disks)
+# print(f"a_star_strong price: {a_star_strong.solve()}")
+# print(f"a_star_strong nodes: {a_star_strong.N}")
 
 
 ########################## test for better strong hur ##########

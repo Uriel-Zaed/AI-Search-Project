@@ -1,25 +1,23 @@
 from node import Node
 from const import *
-from copy import deepcopy
 from static_functions import *
 import json
 
 class A_Star_Buckets():
     def __init__(self, initial_states, goal_state):
         self.initial_states = initial_states # array of string states
-        self.goal_state = string_to_state(goal_state)
-        with open(f'hanoi_database {num_disks-num_small_disk}.txt', "r") as file:
+        self.goal_state = goal_state
+        with open(f'hanoi_pdb_{num_disks-num_small_disk}.txt', "r") as file:
             fileData  = file.read()
-            self.database_big_disk = json.loads(fileData)
-        with open(f'hanoi_database {num_small_disk}.txt', "r") as file:
+            self.database_big = json.loads(fileData)
+        with open(f'hanoi_pdb_{num_small_disk}.txt', "r") as file:
             fileData  = file.read()
-            self.database_small_disk = json.loads(fileData)
-        self.N = 0
+            self.database_small = json.loads(fileData)
     
     def solve(self):
         frontier = []
         for state in self.initial_states:
-            frontier = self.add_node_to_frontier(Node(string_to_state(state), None, 0, self.hur(state)), frontier)
+            frontier = self.add_node_to_frontier(Node(state, None, 0, self.hur(state)), frontier)
         explored = []
         
         while((len(frontier) > 0)):
@@ -55,7 +53,7 @@ class A_Star_Buckets():
         min_disk_per_peg = [-1]*num_towers
         for peg in range(num_towers):
             for i,v in enumerate(cur_node.state):
-                if v == peg:
+                if int(v) == peg:
                     min_disk_per_peg[peg] = i
                     break
         
@@ -63,9 +61,13 @@ class A_Star_Buckets():
             for other_peg,other_disk in enumerate(min_disk_per_peg):
                 if peg != other_peg and disk != -1: # checks if not same peg and have a disk in that peg
                     if disk < other_disk or other_disk == -1: # check if possible move
-                        new_state = deepcopy(cur_node.state) # copy of the cur node state
-                        new_state[disk] = other_peg # change peg
-                        child_list.append(Node(new_state, cur_node, cur_node.g_n + 1, self.hur(state_to_string(new_state)))) # creating child
+                        new_state = ""
+                        for i,v in enumerate(cur_node.state):
+                            if i == disk:
+                                new_state += str(other_peg)
+                            else:
+                                new_state += v
+                        child_list.append(Node(new_state, cur_node, cur_node.g_n + 1, self.hur(new_state))) # creating child
 
         return child_list
 
@@ -100,4 +102,4 @@ class A_Star_Buckets():
         return explored
 
     def hur(self, state):
-        return self.database_big_disk[state[num_small_disk:]][0]+self.database_small_disk[state[:num_small_disk]][0]
+        return self.database_big[state[num_small_disk:]][0]+self.database_small[state[:num_small_disk]][0]

@@ -1,25 +1,30 @@
 from node import Node
 from const import *
-from copy import deepcopy
 from static_functions import *
+import json
 
-class A_Star_Better_Hur():
-    def __init__(self, initial_states, goal_state, database):
-        self.initial_states = initial_states # array of string states
-        self.goal_state = string_to_state(goal_state)
-        self.database = database
+class A_Star_Additive():
+    def __init__(self, initial_state:str, goal_state:str):
+        self.initial_state = initial_state # string of the state
+        self.goal_state = goal_state
+        with open(f'hanoi_pdb_{num_disks-num_small_disk}.txt', "r") as file:
+            fileData  = file.read()
+            self.database_big = json.loads(fileData)
+        with open(f'hanoi_pdb_{num_small_disk}.txt', "r") as file:
+            fileData  = file.read()
+            self.database_small = json.loads(fileData)
+        self.N = 0
 
     
     def solve(self):
-        frontier = []
-        for state in self.initial_states:
-            frontier.append(Node(string_to_state(state), None, 0, self.hur(state)))
+        frontier = [Node(self.initial_state, None, 0, self.hur(self.initial_state))]
         explored = []
         
         while((len(frontier) > 0)):
             cur_node = frontier.pop(0)
+            self.N += 1
 
-            if cur_node.state[num_small_disk:] == self.goal_state[num_small_disk:]:
+            if cur_node.state == self.goal_state:
                 return cur_node.g_n
                 
             explored = self.add_node_to_explored(cur_node, explored)
@@ -49,7 +54,7 @@ class A_Star_Better_Hur():
         min_disk_per_peg = [-1]*num_towers
         for peg in range(num_towers):
             for i,v in enumerate(cur_node.state):
-                if v == peg:
+                if int(v) == peg:
                     min_disk_per_peg[peg] = i
                     break
         
@@ -57,9 +62,13 @@ class A_Star_Better_Hur():
             for other_peg,other_disk in enumerate(min_disk_per_peg):
                 if peg != other_peg and disk != -1: # checks if not same peg and have a disk in that peg
                     if disk < other_disk or other_disk == -1: # check if possible move
-                        new_state = deepcopy(cur_node.state) # copy of the cur node state
-                        new_state[disk] = other_peg # change peg
-                        child_list.append(Node(new_state, cur_node, cur_node.g_n + 1, self.hur(state_to_string(new_state)))) # creating child
+                        new_state = ""
+                        for i,v in enumerate(cur_node.state):
+                            if i == disk:
+                                new_state += str(other_peg)
+                            else:
+                                new_state += v
+                        child_list.append(Node(new_state, cur_node, cur_node.g_n + 1, self.hur(new_state))) # creating child
 
         return child_list
 
@@ -94,4 +103,4 @@ class A_Star_Better_Hur():
         return explored
 
     def hur(self, state):
-        return self.database[state[num_small_disk:]][0]
+        return self.database_big[state[num_small_disk:]][0]+self.database_small[state[:num_small_disk]][0]

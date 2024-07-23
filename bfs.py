@@ -15,8 +15,6 @@ class BFS():
         database = {} # key: configuration, value: (g(configuration), array of allowed pegs))
         
         while((len(frontier) > 0)):
-            if len(explored)%1000==0:
-                print(len(explored))
             cur_node = frontier.pop(0)  
 
             if cur_node.state == self.initial_state:

@@ -2,23 +2,20 @@
 from const import *
 from bfs import BFS
 from static_functions import *
-from a_star import A_Star
 import json
-from a_star_hur_double4 import A_Star_Double4
-from a_star_strong import A_Star_Strong
-from a_star_better_hur import A_Star_Better_Hur
-from a_star_buckets import A_Star_Buckets
+from a_star_hur_additive import A_Star_Additive
+from a_star_pdbi import A_Star_PDBI
 
 ######################## BFS ###########################
-goal_state = [num_towers-1 for d in range(num_disks_bfs)]
+# goal_state = [num_towers-1 for d in range(num_disks_bfs)]
 
-bfs = BFS(goal_state)
-print("BFS...")
-database = bfs.solve()
-print("BFS done")
+# bfs = BFS(goal_state)
+# print("BFS...")
+# database = bfs.solve()
+# print("BFS done")
 
-with open(f'hanoi_database {num_disks_bfs}.txt', 'w') as convert_file: 
-     convert_file.write(json.dumps(database))
+# with open(f'hanoi_pdb_{num_disks_bfs}.txt', 'w') as convert_file: 
+#      convert_file.write(json.dumps(database))
 
 ##################### A* ############################
 # with open(f'hanoi_database {num_disks - num_small_disk}.txt', "r") as file:
