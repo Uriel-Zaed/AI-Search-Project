@@ -13,6 +13,7 @@ class A_Star_Buckets():
         with open(f'hanoi_pdb_{num_small_disk}.txt', "r") as file:
             fileData  = file.read()
             self.database_small = json.loads(fileData)
+        self.heuristic_cache = {}
     
     def solve(self):
         frontier = []
@@ -102,4 +103,8 @@ class A_Star_Buckets():
         return explored
 
     def hur(self, state):
-        return self.database_big[state[num_small_disk:]][0]+self.database_small[state[:num_small_disk]][0]
+        if state in self.heuristic_cache:
+            return self.heuristic_cache[state]
+        heuristic_value = self.database_big[state[num_small_disk:]][0] + self.database_small[state[:num_small_disk]][0]
+        self.heuristic_cache[state] = heuristic_value
+        return heuristic_value
