@@ -7,7 +7,7 @@ class A_Star_Buckets_PDBI():
     def __init__(self, initial_states, goal_state):
         self.initial_states = initial_states # array of string states
         self.goal_state = goal_state
-        with open(f'pdbi_hur_6,2.txt', "r") as file:
+        with open(f'AI-Search-Project/pdbi_hur_6,2.txt', "r") as file:
             fileData  = file.read()
             self.database = json.loads(fileData)
     

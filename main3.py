@@ -10,7 +10,7 @@ from a_star_buckets_pdbi import A_Star_Buckets_PDBI
 
 
 ################### A* ############################
-with open(f'hanoi_pdb_{num_disks-num_small_disk}.txt', "r") as file:
+with open(f'AI-Search-Project/hanoi_pdb_{num_disks-num_small_disk}.txt', "r") as file:
     fileData  = file.read()
     database = json.loads(fileData)
 
@@ -46,17 +46,17 @@ for bucket in a_star_buckets.keys():
 
 print(bucket_min_price)
 
-with open(f'bucket_min_price_{num_disks-num_small_disk}.txt', 'w') as convert_file: 
+with open(f'AI-Search-Project/bucket_min_price_{num_disks-num_small_disk}.txt', 'w') as convert_file: 
      convert_file.write(json.dumps(bucket_min_price))
 
 ################### creating strong hur ######################
 pdbi_hur = {} 
 
-with open(f'hanoi_pdb_{num_disks-num_small_disk}.txt', "r") as file:
+with open(f'AI-Search-Project/hanoi_pdb_{num_disks-num_small_disk}.txt', "r") as file:
     fileData  = file.read()
     database_big = json.loads(fileData)
 
-with open(f'bucket_min_price_{num_disks-num_small_disk}.txt', "r") as file:
+with open(f'AI-Search-Project/bucket_min_price_{num_disks-num_small_disk}.txt', "r") as file:
     fileData  = file.read()
     bucket_min_price = json.loads(fileData)
 
@@ -67,7 +67,7 @@ for config_big in database_big.keys():
     for f_config in full_configs:
         pdbi_hur[f_config] = pdbi_hur_price
 
-with open(f'pdbi_hur_{num_disks-num_small_disk},{num_small_disk}.txt', 'w') as convert_file: 
+with open(f'AI-Search-Project/pdbi_hur_{num_disks-num_small_disk},{num_small_disk}.txt', 'w') as convert_file: 
      convert_file.write(json.dumps(pdbi_hur))
 
 # ####################### checking admissablity ######################

@@ -7,10 +7,10 @@ class A_Star_Buckets():
     def __init__(self, initial_states, goal_state):
         self.initial_states = initial_states # array of string states
         self.goal_state = goal_state
-        with open(f'hanoi_pdb_{num_disks-num_small_disk}.txt', "r") as file:
+        with open(f'AI-Search-Project/hanoi_pdb_{num_disks-num_small_disk}.txt', "r") as file:
             fileData  = file.read()
             self.database_big = json.loads(fileData)
-        with open(f'hanoi_pdb_{num_small_disk}.txt', "r") as file:
+        with open(f'AI-Search-Project/hanoi_pdb_{num_small_disk}.txt', "r") as file:
             fileData  = file.read()
             self.database_small = json.loads(fileData)
         self.heuristic_cache = {}

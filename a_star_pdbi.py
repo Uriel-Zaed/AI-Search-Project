@@ -7,7 +7,7 @@ class A_Star_PDBI():
     def __init__(self, initial_state:str, goal_state:str):
         self.initial_state = initial_state # string of the state
         self.goal_state = goal_state
-        with open(f'pdbi_hur_{num_disks-num_small_disk},{num_small_disk}.txt', "r") as file:
+        with open(f'AI-Search-Project/pdbi_hur_{num_disks-num_small_disk},{num_small_disk}.txt', "r") as file:
             fileData  = file.read()
             self.database = json.loads(fileData)
         self.N = 0
