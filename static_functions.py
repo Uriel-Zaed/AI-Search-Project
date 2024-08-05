@@ -1,6 +1,8 @@
 from const import *
 import itertools
 
+from node import Node
+
 def print_state(state):
         towers = {i: [] for i in range(num_towers)}
     
@@ -38,4 +40,9 @@ def generate_complete_config(state, allowed_pegs):
     combinations = itertools.product(string_allow_pegs, repeat=num_small_disk)
     combinations_list = [''.join(comb) for comb in combinations]
     return [comb+state for comb in combinations_list]
-        
+
+def get_initial_state(solved_node: Node):
+    cur_node = solved_node
+    while cur_node.parent is not None:
+          cur_node = cur_node.parent
+    return cur_node.state

@@ -3,7 +3,7 @@ from const import *
 from static_functions import *
 import json
 
-class A_Star_Buckets():
+class A_Star_Buckets_Min_Sol():
     def __init__(self, initial_states, goal_state):
         self.initial_states = initial_states # array of string states
         self.goal_state = goal_state
@@ -14,8 +14,9 @@ class A_Star_Buckets():
             fileData  = file.read()
             self.database_small = json.loads(fileData)
         self.heuristic_cache = {}
+        self.N = 0
     
-    def solve(self):
+    def solve(self) -> Node:
         frontier = []
         for state in self.initial_states:
             frontier = self.add_node_to_frontier(Node(state, None, 0, self.hur(state)), frontier)
@@ -23,13 +24,18 @@ class A_Star_Buckets():
         
         while((len(frontier) > 0)):
             cur_node = frontier.pop(0)
+            self.N += 1
         
             if cur_node.state == self.goal_state:
                 temp = len(explored)
                 print(temp)
-                return cur_node.g_n
+                return cur_node
+            
                 
-            explored = self.add_node_to_explored(cur_node, explored)
+            explored, exist = self.add_node_to_explored(cur_node, explored)
+
+            if exist:
+                continue
 
             # create list of childs
             child_list = self.get_childs(cur_node)
@@ -38,7 +44,7 @@ class A_Star_Buckets():
                 if (not self.in_list(child, frontier)) and (not self.in_list(child, explored)):
                     frontier = self.add_node_to_frontier(child, frontier)
         
-        return None
+        return cur_node
                     
                     
     def get_solution(self, node):
@@ -98,11 +104,11 @@ class A_Star_Buckets():
             if node.state == n.state:
                 if node.g_n < n.g_n:
                     explored[i] = node
-                    return explored
+                    return explored, False
                 else:
-                    return explored
+                    return explored, True
         explored.append(node)
-        return explored
+        return explored, False
 
     def hur(self, state):
         if state in self.heuristic_cache:
